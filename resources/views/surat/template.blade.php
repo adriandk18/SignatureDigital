@@ -39,7 +39,7 @@
     </table>
 </div>
 
-
+<div class="content-all content-info mb-4" style="font-family: 'Times New Roman'; font-size: 14px;">
 <div class="content-info">
     <table>
         <tr><td>No</td><td>: {{ $surat->nomor_surat }}</td></tr>
@@ -51,7 +51,7 @@
 
 <div class="kepada">
     Kepada<br>
-    Yth. ____________________________<br>
+    Yth. {{ $surat->penerima }}<br>
     Di Tempat
 </div>
 
@@ -68,33 +68,23 @@
 
 
 <div class="ttd-box">
-    <p>Hormat Kami</p>
+    <p>Hormat Saya, {{ $surat->penandatangan_jabatan }}</p>
     <p>{{ \Carbon\Carbon::parse($surat->created_at)->translatedFormat('d F Y') }}</p>
     <br>
-    <p>a.n Dekan FT</p>
-    <p>Wakil Dekan Bidang Akademik dan</p>
-    <p>Kemahasiswaan FT</p>
-    <br> {{-- Tambahkan <br> untuk memberi jarak ke QR --}}
-    
-    {{-- QR code dari referensi gambar --}}
-    @if(isset($qr)) {{-- Pastikan $qr ada sebelum mencoba menampilkannya --}}
-        <img src="data:image/svg+xml;base64,{{ $qr }}" width="100"> {{-- Ukuran QR disesuaikan agar tidak terlalu besar di bagian TTD --}}
+
+    {{-- QR Code --}}
+    @if(isset($qr))
+        <img src="data:image/svg+xml;base64,{{ $qr }}" width="100">
     @else
-        <div style="width: 100px; height: 100px; border: 1px dashed #ccc; text-align: center; line-height: 100px; font-size: 8pt;">QR Placeholder</div>
+        <div style="width: 100px; height: 100px; border: 1px dashed #ccc; text-align: center; line-height: 100px; font-size: 8pt;">QR</div>
     @endif
-    <br><br> {{-- Tambahkan <br> untuk jarak ke nama --}}
 
-    <p><strong>Dr. -Ing. Dhidik Prastiyanto, S.T., M.T.</strong></p>
+    <br>
+
+    {{-- Nama Pejabat --}}
+    <p><strong>{{ $surat->penandatangan_nama }}</strong></p>
 </div>
-
-<div style="clear: both;"></div>
-
-
-{{-- Bagian QR code yang terpisah di bawah ini dihapus karena sudah digabungkan ke ttd-box --}}
-{{-- <div class="qr-box">
-    <p>Scan QR untuk verifikasi keaslian:</p>
-    <img src="data:image/svg+xml;base64,{{ $qr }}" width="130">
-</div> --}}
+</div>
 
 </body>
 </html>
