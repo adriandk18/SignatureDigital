@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
          Schema::table('surats', function (Blueprint $table) {
-            $table->string('penandatangan')->nullable()->after('isi');
+            $table->string('penandatangan_nama')->nullable();
+            $table->string('penandatangan_jabatan')->nullable();
         });
     }
 
@@ -22,7 +23,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('surats', function (Blueprint $table) {
-            $table->dropColumn('penandatangan');
+            $table->dropColumn('penandatangan_nama');
+            $table->dropColumn('penandatangan_jabatan');
         });
     }
 };
