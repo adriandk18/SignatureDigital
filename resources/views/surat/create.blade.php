@@ -29,8 +29,13 @@
     </div>
 
     <div class="mb-3">
+        <label>Jabatan Penandatangan</label>
+        <input type="text" name="penandatangan_jabatan" class="form-control">
+    </div>
+
+    <div class="mb-3">
         <label>Nama Penandatangan</label>
-        <input type="text" name="penandatangan" class="form-control" placeholder="Contoh: Kepala Desa">
+        <input type="text" name="penandatangan_nama" class="form-control">
     </div>
 
     <button class="btn btn-primary">Simpan</button>
