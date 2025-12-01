@@ -12,7 +12,8 @@ class Surat extends Model
         'isi',
         'penerima',
         'tanggal',
-        'penandatangan',
+        'penandatangan_nama',
+        'penandatangan_jabatan',
     ];
 }
 
