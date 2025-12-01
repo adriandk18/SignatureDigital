@@ -39,5 +39,10 @@
     </div>
 
     <button class="btn btn-primary">Simpan</button>
+
+    <a href="{{ route('surat.index') }}" class="btn btn-secondary ms-2">
+        Kembali
+    </a>
+    
 </form>
 @endsection
