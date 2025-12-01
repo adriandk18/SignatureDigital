@@ -7,9 +7,6 @@ use App\Http\Controllers\SuratController;
      return redirect('/surat');
  });
 
-// Route::resource('surat', SuratController::class);
-// Route::get('surat/{id}/pdf', [SuratController::class, 'pdf'])->name('surat.pdf');
-
 Route::get('/surat/verify', [SuratController::class, 'verifyPage'])->name('surat.verify');
 Route::post('/surat/verify/check', [SuratController::class, 'verifyProcess'])->name('surat.verify.process');
 
@@ -20,4 +17,3 @@ Route::get('/surat/{id}/preview', [SuratController::class, 'preview'])->name('su
 
 // Download PDF
 Route::get('/surat/{id}/download', [SuratController::class, 'download'])->name('surat.download');
-
