@@ -32,7 +32,11 @@
         <label>Nama Penandatangan</label>
         <input type="text" name="penandatangan" class="form-control" value="{{ $surat->penandatangan }}" placeholder="Contoh: Kepala Desa">
     </div>
-    
+
     <button class="btn btn-warning">Update</button>
+
+    <a href="{{ route('surat.index') }}" class="btn btn-secondary ms-2">
+        Kembali
+    </a>
 </form>
 @endsection
