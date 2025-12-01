@@ -6,7 +6,7 @@ use App\Models\Surat;
 use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade\Pdf;
 
-// BaconQrcode v2
+// BaconQrCode v2
 use BaconQrCode\Writer;
 use BaconQrCode\Renderer\ImageRenderer;
 use BaconQrCode\Renderer\RendererStyle\RendererStyle;
@@ -29,11 +29,21 @@ class SuratController extends Controller
     {
         $request->validate([
             'judul' => 'required',
+            'nomor_surat' => 'nullable',
             'isi'   => 'required',
-            'penandatangan' => 'required'
+            'penerima' => 'required',
+            'penandatangan_nama' => 'required',
+            'penandatangan_jabatan' => 'required'
         ]);
 
-        Surat::create($request->all());
+        Surat::create([
+            'judul' => $request->judul,
+            'nomor_surat' => $request->nomor_surat,
+            'isi'   => $request->isi,
+            'penerima' => $request->penerima,
+            'penandatangan_nama' => $request->penandatangan_nama,
+            'penandatangan_jabatan' => $request->penandatangan_jabatan
+        ]);
 
         return redirect()->route('surat.index')->with('success', 'Surat berhasil dibuat.');
     }
@@ -56,11 +66,21 @@ class SuratController extends Controller
 
         $request->validate([
             'judul' => 'required',
+            'nomor_surat' => 'nullable',
             'isi'   => 'required',
-            'penandatangan' => 'required'
+            'penerima' => 'required',
+            'penandatangan_nama' => 'required',
+            'penandatangan_jabatan' => 'required'
         ]);
 
-        $surat->update($request->all());
+        $surat->update([
+            'judul' => $request->judul,
+            'nomor_surat' => $request->nomor_surat,
+            'isi'   => $request->isi,
+            'penerima' => $request->penerima,
+            'penandatangan_nama' => $request->penandatangan_nama,
+            'penandatangan_jabatan' => $request->penandatangan_jabatan
+        ]);
 
         return redirect()->route('surat.index')->with('success', 'Surat berhasil diperbarui.');
     }
@@ -72,9 +92,8 @@ class SuratController extends Controller
     }
 
 
-
     /* ===================================================
-     *      QR CODE GENERATOR (SVG — NO GD/IMAGICK)
+     *      QR CODE GENERATOR (SVG)
      * =================================================== */
     private function generateQr(string $text): string
     {
@@ -101,12 +120,12 @@ class SuratController extends Controller
             $surat->id .
             $surat->judul .
             $surat->isi .
-            $surat->penandatangan .
+            $surat->penandatangan_nama .
+            $surat->penandatangan_jabatan .
             $surat->created_at .
             $secret
         );
     }
-
 
 
     /* ===================================================
@@ -122,7 +141,6 @@ class SuratController extends Controller
 
         return view('surat.preview', compact('surat', 'qr'));
     }
-
 
 
     /* ===================================================
@@ -143,7 +161,6 @@ class SuratController extends Controller
     }
 
 
-
     /* ===================================================
      *             F I T U R   V E R I F I K A S I
      * =================================================== */
@@ -155,25 +172,24 @@ class SuratController extends Controller
 
     public function verifyProcess(Request $request)
     {
-    $request->validate([
-        'id'   => 'required',
-        'hash' => 'required'
-    ]);
+        $request->validate([
+            'id'   => 'required',
+            'hash' => 'required'
+        ]);
 
-    $surat = Surat::find($request->id);
+        $surat = Surat::find($request->id);
 
-    if (!$surat) {
-        return back()->with('error', 'Surat tidak ditemukan.');
-    }
+        if (!$surat) {
+            return back()->with('error', 'Surat tidak ditemukan.');
+        }
 
-    // hash asli yang seharusnya cocok
-    $realHash = $this->generateHash($surat);
+        // hash asli
+        $realHash = $this->generateHash($surat);
 
-    if ($realHash === $request->hash) {
-        return back()->with('success', '✔ Surat valid & asli.');
-    }
+        if ($realHash === $request->hash) {
+            return back()->with('success', '✔ Surat valid & asli.');
+        }
 
         return back()->with('error', '❌ Surat tidak valid (hash tidak cocok).');
     }
-
 }
