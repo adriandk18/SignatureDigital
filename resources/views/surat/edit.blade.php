@@ -6,7 +6,8 @@
 <h3>Edit Surat</h3>
 
 <form action="{{ route('surat.update', $surat->id) }}" method="POST">
-    @csrf @method('PUT')
+    @csrf 
+    @method('PUT')
 
     <div class="mb-3">
         <label>Judul</label>
@@ -14,7 +15,7 @@
     </div>
 
     <div class="mb-3">
-        <label>Nomor Surat</label>
+        <label>Nomor Surat (opsional)</label>
         <input type="text" name="nomor_surat" class="form-control" value="{{ $surat->nomor_surat }}">
     </div>
 
@@ -29,8 +30,15 @@
     </div>
 
     <div class="mb-3">
+        <label>Jabatan Penandatangan</label>
+        <input type="text" name="penandatangan_jabatan" class="form-control" 
+            value="{{ $surat->penandatangan_jabatan }}">
+    </div>
+
+    <div class="mb-3">
         <label>Nama Penandatangan</label>
-        <input type="text" name="penandatangan" class="form-control" value="{{ $surat->penandatangan }}" placeholder="Contoh: Kepala Desa">
+        <input type="text" name="penandatangan_nama" class="form-control" 
+            value="{{ $surat->penandatangan_nama }}">
     </div>
 
     <button class="btn btn-warning">Update</button>
