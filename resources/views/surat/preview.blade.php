@@ -73,20 +73,12 @@
     <!-- TANDA TANGAN -->
     <div style="width: 300px; margin-left: auto; font-family: 'Times New Roman'; font-size: 14px;">
         
-        <p>Hormat Saya,</p>
-        <p>{{ \Carbon\Carbon::parse($surat->created_at)->translatedFormat('d F Y') }}</p>
-
-        <br>
-
-        <p>{{ $surat->penandatangan_jabatan ?? '-' }}</p>
-
+        <p>Hormat Saya, {{ $surat->penandatangan_jabatan ?? '-' }}</p>
+        <p>{{ \Carbon\Carbon::parse($surat->created_at)->translatedFormat('d F Y') }}</p>   
         <!-- QR CODE -->
         <div class="mt-3">
-            <strong>QR Code Tanda Tangan:</strong><br>
             <img src="data:image/svg+xml;base64,{{ $qr }}" width="130">
         </div>
-
-        <br><br>
 
         <p><strong>{{ $surat->penandatangan_nama ?? '-' }}</strong></p>
     </div>
